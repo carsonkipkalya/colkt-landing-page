@@ -28,7 +28,8 @@ The landing page serves as Colkt's public introduction and pre-launch home. Its 
 
 ## Tech Stack
 
-- **HTML**
+- **HTML5** – Page structure and semantic markup.
+- **CSS3** – Styling, responsive layouts, and animations.
 
 ## Status
 
