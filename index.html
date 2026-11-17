@@ -4,33 +4,72 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Colkt | Your personal media library for movies, shows and books</title>
+    <link rel="stylesheet" href="./css/styling.css">
 </head>
 <body>
-    <header>
-        <div class="logo">
-            <p>colklt</p>
-            <p>crates</p>
-        </div>
-        <ul>
-            <li>About</li>
-            <li>Features</li>
-            <li>Roadmap</li>
-        </ul>
+    <header class="header">
+        <a href="/" class="logo" aria-label="Colkt Crates home">
+            <svg class="logo-symbol" viewBox="0 0 32 32" aria-hidden="true">
+                <rect x="0" y="0" width="30" height="7" rx="4" fill="#C6F432"/>
+                <rect x="0" y="10" width="14" height="7" rx="4" fill="#FF6B4A"/>
+                <rect x="0" y="20" width="30" height="7" rx="4" fill="#C6F432"/>
+            </svg>
+            <span class="logo-text">
+                <span>colkt</span>
+                <span>crates</span>
+            </span>
+        </a>
+        <nav class="nav" aria-label="Main navigation">
+            <ul class="nav-links">
+                <li><a href="#about">About</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#roadmap">Roadmap</a></li>
+            </ul>
+        </nav>
+        <button class="menu-toggle" aria-label="Open navigation" aria-expanded="false">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+                <rect x="3" y="4" width="18" height="16" rx="2.5" />
+                <path d="M9 4v16" />
+                <path d="M6 8h1M6 11h1" />
+            </svg>
+        </button>
     </header>
 
     <main>
-        <div class="hero">
-            <p>Your shelf, your way.</p>
-            <h1>One shelf for everything you watch and read.</h1>
-            <p>Colkt is a private personal media library for movies, TV shows and books. Collect what you love, organise it your way, keep track of your progress, and enjoy it, all in one place.</p>
-            <form action="">Enter your email address...</form>
-            <button>JOIN WAITLIST →</button>
-            <p>Join 1200+ media enthusiast waiting for early access. No spam, and you can unsubscribe whenever you like.</p>
-            <div class="hero-img">
+        <section class="hero">
+            <div class="hero-content">
+                <p class="hero-eyebrow">
+                    <svg class="status-dot" viewBox="0 0 8 8" aria-hidden="true">
+                        <circle cx="4" cy="4" r="4" />
+                    </svg>
+                    Your shelf, your way.
+                </p>
+                <h1>One shelf for everything you watch and read.</h1>
+                <p class="hero-description">Colkt is a private personal media library for movies, TV shows and books. Collect what you love, organise it your way, keep track of your progress, and enjoy it, all in one place.</p>
+                <form  class="waitlist-form" action="" method="post">
+                    <input
+                        type="email"
+                        name="email"
+                        placeholder="Enter your email address"
+                        onfocus="this.placeholder='you@domain.com'"
+                        onblur="this.placeholder='Enter your email address'"
+                        aria-label="Email address"
+                        required
+                    >
+                    <button type="submit" class="waitlist-button">
+                        <span>Join waitlist</span>
+                        <svg class="button-arrow" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M5 12h14M12 5l7 7-7 7" />
+                        </svg>
+                    </button>
+                </form>
+                <p class="hero-note">Join 1200+ media enthusiast waiting for early access. No spam, and you can unsubscribe whenever you like.</p>
+            </div>
+            <div class="hero-image">
                 <img src="./assets/images/colkt-hero.webp" alt="Colkt personal media library displaying a collection of movies, TV shows and books in one place.">
             </div>
-        </div>
-        <div class="about">
+        </section>
+        <section class="about">
             <h2>A home for the things you love.</h2>
             <p> Movies live in one app. Books in another. The shows you mean to watch are in a note on your phone, and the film a friend recommended is in your memory, for now.</p>
             <div class="card">
@@ -50,8 +89,8 @@
                 <p>When it's time to settle in, you can watch or read your local media right inside Colkt.</p>
             </div>
             <p>Colkt doesn't provide movies, shows or books. It helps you look after your own.</p>
-        </div>
-        <div class="features">
+        </section>
+        <section class="features">
             <h2>Everything on your shelf, working together.</h2>
             <p> Here's what Colkt is being built to do.</p>
             <img src="./assets/images/colkt-home-shelf.webp" alt="Colkt unified media library showing movie posters, TV shows and book covers in a single collection.">
@@ -74,8 +113,8 @@
             <p> 5: Watch and read inside Colkt</p>
             <h3> Press play. Turn the page.</h3>
             <p>Watch supported local movies and TV shows, and read supported local books, without leaving your library. Browsing, tracking and enjoying all happen in the same place.</p>
-        </div>
-        <div class="trust">
+        </section>
+        <section class="trust">
             <h2>Your library. Your rules.</h2>
             <p>A personal library should feel personal. Here's what we're building Colkt to stand for.</p>
             <h3>Private by design</h3>
@@ -84,8 +123,8 @@
             <p>Colkt is being built in the open. You can see how it works, follow its progress and help shape it.</p>
             <h3>Yours to enjoy</h3>
             <p>Colkt helps you organise and enjoy the media that's already yours. It doesn't supply movies, shows or books, and it isn't a streaming service.</p>
-        </div>
-        <div class="roadmap">
+        </section>
+        <section class="roadmap">
             <h2>Built in the open.</h2>
             <p>Colkt is a real project, and we'd like you to be able to watch it take shape. This is where you can follow along, see what's happening and tell us what you think.</p>
             <h3>Completed</h3>
@@ -102,14 +141,14 @@
             <p>Read the terms Colkt is shared under.</p>
             <h3>Releases   →</h3>
             <p>Get the latest release when it's available.</p>
-        </div>
-        <div class="cta">
+        </section>
+        <section class="cta">
             <h3>Your shelf is ready when you are.</h3>
             <P>Join the waitlist and be among the first to try Colkt. Start gathering your favourites in one place that's yours.</P>
             <form action="">Enter your email address...</form>
             <button> Save my spot →</button>
             <p>We'll send one email when Colkt is ready to try, and the odd update before then. No spam, and you can unsubscribe at any time.</p>
-        </div>
+        </section>
     </main>
     <footer>
         <div class="logo">
