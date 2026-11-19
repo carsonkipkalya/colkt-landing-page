@@ -45,6 +45,8 @@
   /* Layout */
 
   --container-width: 1200px;
+  --card-max-width: 22rem;
+  --card-group-max-width: 68.75rem;
   --section-spacing: 5rem;
 
 }
@@ -186,7 +188,7 @@ h3 {
     width: min(20rem, calc(100vw - 2rem));
     max-height: calc(100dvh - 2rem);
     overflow-y: auto;
-    padding: 1.5rem;
+    padding: 1rem 1.5rem;
     border: 1px solid var(--color-border);
     border-radius: var(--radius-lg);
     background: var(--color-surface);
@@ -440,6 +442,9 @@ body.menu-open::before {
     display: grid;
     grid-template-columns: 1fr;
     gap: 1rem;
+    width: 100%;
+    max-width: 45rem;
+    margin-inline: auto;
 }
 
 .card {
@@ -491,6 +496,24 @@ body.menu-open::before {
 .about .card {
     margin-bottom: var(--space-xs);
 }
+
+.about-cards > .card,
+.trust-cards > .card,
+.roadmap-cards > .roadmap-card,
+.resource-cards > .resource-card {
+    width: 100%;
+    max-width: var(--card-max-width);
+    justify-self: center;
+}
+
+.trust-cards,
+.roadmap-cards,
+.resource-cards {
+    width: 100%;
+    max-width: var(--card-group-max-width);
+    margin-inline: auto;
+}
+
 .about > p {
     margin-bottom: var(--space-md);
 }
@@ -921,7 +944,7 @@ html:not(.js-enabled) .features-indicators {
 
 @media (min-width: 48rem) {
     :root {
-        --section-spacing: 6rem;
+        --section-spacing: clamp(5rem, 7.5vw, 6rem);
     }
 
     .header {
@@ -981,14 +1004,14 @@ html:not(.js-enabled) .features-indicators {
         width: 100%;
         max-width: var(--container-width);
         margin-inline: auto;
-        padding-inline: 2rem;
+        padding-inline: clamp(1.5rem, 3vw, 2rem);
     }
 
     .hero {
         display: grid;
         grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
         align-items: center;
-        gap: clamp(2rem, 5vw, 4rem);
+        gap: clamp(1.5rem, 4.5vw, 4rem);
         text-align: left;
     }
 
@@ -1028,9 +1051,6 @@ html:not(.js-enabled) .features-indicators {
 
     .about-cards {
         grid-template-columns: repeat(2, minmax(0, 1fr));
-        width: 100%;
-        max-width: 720px;
-        margin-inline: auto;
     }
 
     .about .card {
@@ -1095,7 +1115,8 @@ html:not(.js-enabled) .features-indicators {
     .features.is-pinned .features-grid {
         position: sticky;
         top: 5rem;
-        display: flex;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
         gap: 0;
         width: min(100%, 760px);
         aspect-ratio: 4 / 3;
@@ -1106,10 +1127,9 @@ html:not(.js-enabled) .features-indicators {
 
     .features.is-pinned .feature-slide,
     .features.is-pinned .feature-slide.active {
-        position: relative;
-        inset: auto;
+        position: absolute;
+        inset: 0;
         display: block;
-        flex: 0 0 100%;
         width: 100%;
         max-width: none;
         height: 100%;
@@ -1128,7 +1148,7 @@ html:not(.js-enabled) .features-indicators {
         bottom: 1rem;
         left: auto;
         width: fit-content;
-        max-width: min(30rem, calc(100% - 2rem));
+        max-width: min(var(--card-max-width), calc(100% - 2rem));
         padding: 1.25rem;
         border-radius: var(--radius-lg);
         background: rgba(24, 26, 21, .9);

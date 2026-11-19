@@ -5,6 +5,7 @@ const navigation = document.querySelector('.nav');
 const menuToggle = document.querySelector('.menu-toggle');
 const menuClose = document.querySelector('.nav-close');
 const desktopLayout = window.matchMedia('(min-width: 48rem)');
+const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 const featureSection = document.querySelector('.features');
 const featureSlides = [...document.querySelectorAll('.feature-slide')];
 const featureIndicators = [...document.querySelectorAll('.features-indicators button')];
@@ -19,13 +20,20 @@ let accumulatedScroll = 0;
 let scrollDirection = 0;
 let scheduledFrame = 0;
 
-function setActiveFeature(index, showDescription = true) {
+function setActiveFeature(index, showDescription = true, revealProgress = 0) {
     activeFeature = index;
     if (desktopLayout.matches) {
-        const trackTransform = `translateX(-${activeFeature * 100}%)`;
-        featureSlides.forEach((slide) => {
-            if (slide.style.transform !== trackTransform) {
-                slide.style.transform = trackTransform;
+        featureSlides.forEach((slide, slideIndex) => {
+            const imageOpacity = slideIndex === activeFeature
+                ? 1
+                : slideIndex === activeFeature + 1 && !reducedMotion.matches
+                    ? revealProgress
+                    : 0;
+            const image = slide.querySelector('img');
+            const opacity = String(imageOpacity);
+
+            if (image.style.opacity !== opacity) {
+                image.style.opacity = opacity;
             }
         });
     }
@@ -70,7 +78,7 @@ function updateDesktopFeature() {
     const index = Math.min(featureSlides.length - 1, Math.floor(position));
     const featureProgress = progress === 1 ? 1 : position - index;
 
-    setActiveFeature(index, featureProgress >= 0.2);
+    setActiveFeature(index, featureProgress >= 0.2, featureProgress);
 }
 
 function closeMenu(restoreFocus = true) {
@@ -123,7 +131,9 @@ function configureFeatureLayout() {
 
     featureSection.classList.remove('is-pinned');
     featureSection.style.removeProperty('height');
-    featureSlides.forEach((slide) => slide.style.removeProperty('transform'));
+    featureSlides.forEach((slide) => {
+        slide.querySelector('img').style.removeProperty('opacity');
+    });
     featureSection.classList.add('is-mobile');
     setActiveFeature(activeFeature);
 }
@@ -288,5 +298,6 @@ window.addEventListener('scroll', scheduleScrollUpdate, { passive: true });
 window.addEventListener('resize', scheduleScrollUpdate, { passive: true });
 window.addEventListener('resize', configureFeatureLayout, { passive: true });
 desktopLayout.addEventListener('change', configureFeatureLayout);
+reducedMotion.addEventListener('change', updateDesktopFeature);
 
 configureFeatureLayout();
