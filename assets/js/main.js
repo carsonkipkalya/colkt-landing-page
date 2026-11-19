@@ -8,6 +8,9 @@ const desktopLayout = window.matchMedia('(min-width: 48rem)');
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 const featureSection = document.querySelector('.features');
 const featureSlides = [...document.querySelectorAll('.feature-slide')];
+const featureScrollScreens = 2.2;
+const imageTransitionStart = 0.75;
+const descriptionRevealProgress = 0.35;
 const featureIndicators = [...document.querySelectorAll('.features-indicators button')];
 const previousFeature = document.querySelector('.features-controls button:first-child');
 const nextFeature = document.querySelector('.features-controls button:last-child');
@@ -77,8 +80,18 @@ function updateDesktopFeature() {
     const position = progress * featureSlides.length;
     const index = Math.min(featureSlides.length - 1, Math.floor(position));
     const featureProgress = progress === 1 ? 1 : position - index;
+    const imageProgress = Math.min(
+        1,
+        Math.max(0, (featureProgress - imageTransitionStart) / (1 - imageTransitionStart))
+    );
+    const showDescription = featureProgress >= descriptionRevealProgress &&
+        (
+            reducedMotion.matches ||
+            index === featureSlides.length - 1 ||
+            featureProgress < imageTransitionStart
+        );
 
-    setActiveFeature(index, featureProgress >= 0.2, featureProgress);
+    setActiveFeature(index, showDescription, imageProgress);
 }
 
 function closeMenu(restoreFocus = true) {
@@ -124,7 +137,7 @@ function configureFeatureLayout() {
     if (isDesktop) {
         featureSection.classList.remove('is-mobile');
         featureSection.classList.add('is-pinned');
-        featureSection.style.height = `${(featureSlides.length + 1) * 100}vh`;
+        featureSection.style.height = `${(featureSlides.length * featureScrollScreens + 1) * 100}vh`;
         updateDesktopFeature();
         return;
     }
