@@ -12,8 +12,8 @@ const featureScrollScreens = 2.2;
 const imageTransitionStart = 0.75;
 const descriptionRevealProgress = 0.35;
 const featureIndicators = [...document.querySelectorAll('.features-indicators button')];
-const previousFeature = document.querySelector('.features-controls button:first-child');
-const nextFeature = document.querySelector('.features-controls button:last-child');
+const previousFeature = document.querySelector('.features-navigation > button:first-child');
+const nextFeature = document.querySelector('.features-navigation > button:last-child');
 const roadmap = document.querySelector('.roadmap');
 let activeFeature = 0;
 let menuIsOpen = false;
@@ -273,7 +273,7 @@ nextFeature.addEventListener('click', () => {
 });
 
 featureSection.addEventListener('keydown', (event) => {
-    if (desktopLayout.matches || !event.target.closest('.features-controls, .features-indicators')) {
+    if (desktopLayout.matches || !event.target.closest('.features-navigation')) {
         return;
     }
 
@@ -305,6 +305,14 @@ heroEmail.addEventListener('focus', () => {
 });
 heroEmail.addEventListener('blur', () => {
     heroEmail.placeholder = 'Enter your email address';
+});
+
+const ctaEmail = document.querySelector('.cta .waitlist-form input[type="email"]');
+ctaEmail.addEventListener('focus', () => {
+    ctaEmail.placeholder = 'you@domain.com';
+});
+ctaEmail.addEventListener('blur', () => {
+    ctaEmail.placeholder = 'Enter your email address';
 });
 
 window.addEventListener('scroll', scheduleScrollUpdate, { passive: true });

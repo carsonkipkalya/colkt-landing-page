@@ -74,8 +74,10 @@
             </div>
         </section>
         <section class="about">
-            <h2>A home for the things you love.</h2>
-            <p> Movies live in one app. Books in another. The shows you mean to watch are in a note on your phone, and the film a friend recommended is in your memory, for now.</p>
+            <div class="about-heading">
+                <h2>A home for the things you love.</h2>
+                <p> Movies live in one app. Books in another. The shows you mean to watch are in a note on your phone, and the film a friend recommended is in your memory, for now.</p>
+            </div>
             <div class="about-cards">
                 <div class="card">
                     <div class="card-icon collect-icon">
@@ -175,17 +177,17 @@
                     </div>
                 </article>
             </div>
-            <div class="features-indicators" role="group" aria-label="Choose a feature">
-                <button type="button" aria-label="Show feature 1 of 5" aria-controls="feature-1" aria-pressed="true"></button>
-                <button type="button" aria-label="Show feature 2 of 5" aria-controls="feature-2" aria-pressed="false"></button>
-                <button type="button" aria-label="Show feature 3 of 5" aria-controls="feature-3" aria-pressed="false"></button>
-                <button type="button" aria-label="Show feature 4 of 5" aria-controls="feature-4" aria-pressed="false"></button>
-                <button type="button" aria-label="Show feature 5 of 5" aria-controls="feature-5" aria-pressed="false"></button>
-            </div>
-            <div class="features-controls">
+            <div class="features-navigation">
                 <button type="button" aria-label="Previous feature" disabled>
                     &larr;
                 </button>
+                <div class="features-indicators" role="group" aria-label="Choose a feature">
+                    <button type="button" aria-label="Show feature 1 of 5" aria-controls="feature-1" aria-pressed="true"></button>
+                    <button type="button" aria-label="Show feature 2 of 5" aria-controls="feature-2" aria-pressed="false"></button>
+                    <button type="button" aria-label="Show feature 3 of 5" aria-controls="feature-3" aria-pressed="false"></button>
+                    <button type="button" aria-label="Show feature 4 of 5" aria-controls="feature-4" aria-pressed="false"></button>
+                    <button type="button" aria-label="Show feature 5 of 5" aria-controls="feature-5" aria-pressed="false"></button>
+                </div>
                 <button type="button" aria-label="Next feature">
                     &rarr;
                 </button>
@@ -364,24 +366,26 @@
             <div class="cta-content">
                 <h2>Your shelf is ready when you are.</h2>
                 <p>Join the waitlist and be among the first to try Colkt. Start gathering your favourites in one place that's yours.</p>
-                <form class="waitlist-form" action="" method="post">
-                    <input
-                        type="email"
-                        name="email"
-                        placeholder="you@domain.com"
-                        aria-label="Email address"
-                        required
-                    >
-                    <button type="submit" class="waitlist-button">
-                        <span>Save my spot</span>
-                        <svg class="button-arrow" viewBox="0 0 24 24" aria-hidden="true">
-                            <path d="M5 12h14m-7-7 7 7-7 7"/>
-                        </svg>
-                    </button>
-                </form>
-                <p class="cta-note">
-                    We'll send one email when Colkt is ready to try, and the odd update before then. No spam, and you can unsubscribe at any time.
-                </p>
+                <div class="form-content">
+                    <form class="waitlist-form" action="" method="post">
+                        <input
+                            type="email"
+                            name="email"
+                            placeholder="Enter your email address"
+                            aria-label="Email address"
+                            required
+                        >
+                        <button type="submit" class="waitlist-button">
+                            <span>Save my spot</span>
+                            <svg class="button-arrow" viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M5 12h14m-7-7 7 7-7 7"/>
+                            </svg>
+                        </button>
+                    </form>
+                    <p class="cta-note">
+                        We'll send one email when Colkt is ready to try, and the odd update before then. No spam, and you can unsubscribe at any time.
+                    </p>
+                </div>
             </div>
         </section>
     </main>
