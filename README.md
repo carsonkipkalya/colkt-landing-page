@@ -30,6 +30,7 @@ The landing page serves as Colkt's public introduction and pre-launch home. Its 
 
 - **HTML5** – Page structure and semantic markup.
 - **CSS3** – Styling, responsive layouts, and animations.
+- **JavaScript (ES6+)** – Interactive features and dynamic behaviour.
 
 ## Status
 
