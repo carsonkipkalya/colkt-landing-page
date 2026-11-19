@@ -134,6 +134,9 @@ h3 {
 /* NAVIGATION */
 
 .header {
+    position: sticky;
+    top: 1rem;
+    z-index: 1000;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -144,6 +147,11 @@ h3 {
     border-radius: var(--radius-lg);
     box-shadow: 0 8px 24px rgba(0, 0, 0, .15);
     max-width: 480px;
+    transition: transform 220ms ease;
+}
+
+.header.is-hidden {
+    transform: translateY(calc(-100% - 2rem));
 }
 
 .logo-symbol {
@@ -169,7 +177,97 @@ h3 {
 }
 
 .nav {
+    position: fixed;
+    inset: 1rem 1rem auto auto;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    width: min(20rem, calc(100vw - 2rem));
+    max-height: calc(100dvh - 2rem);
+    overflow-y: auto;
+    padding: 1.5rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, .25);
+    transform: translateX(calc(100% + 2rem));
+    visibility: hidden;
+    transition: transform 220ms ease, visibility 0s linear 220ms;
+}
+
+.nav.is-open {
+    transform: translateX(0);
+    visibility: visible;
+    transition: transform 220ms ease, visibility 0s;
+}
+
+.nav-close {
+    display: grid;
+    place-items: center;
+    align-self: flex-end;
+    width: 40px;
+    height: 40px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-full);
+    background: transparent;
+    color: var(--color-text);
+}
+
+.nav-close svg {
+    width: 22px;
+    height: 22px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+}
+
+.nav-links {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+html:not(.js-enabled) .nav {
+    position: static;
+    inset: auto;
+    z-index: auto;
+    display: block;
+    width: auto;
+    max-height: none;
+    overflow: visible;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+    transform: none;
+    visibility: visible;
+    transition: none;
+}
+
+html:not(.js-enabled) .nav-close,
+html:not(.js-enabled) .menu-toggle {
     display: none;
+}
+
+html:not(.js-enabled) .nav-links {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: .65rem;
+}
+
+body.menu-open {
+    overflow: hidden;
+}
+
+body.menu-open::before {
+    position: fixed;
+    inset: 0;
+    z-index: 999;
+    background: rgba(14, 15, 12, .28);
+    backdrop-filter: blur(3px);
+    content: "";
 }
 
 
@@ -418,6 +516,15 @@ h3 {
     grid-template-columns: 1fr;
 }
 
+html:not(.js-enabled) .features-grid {
+    gap: 2rem;
+}
+
+html:not(.js-enabled) .feature-slide {
+    display: block;
+    grid-area: auto;
+}
+
 .feature-slide {
     display: none;
     grid-area: 1 / 1;
@@ -455,6 +562,26 @@ h3 {
     display: flex;
     justify-content: center;
     gap: .75rem;
+}
+
+.features-indicators {
+    display: flex;
+    justify-content: center;
+    gap: .6rem;
+    margin-top: 1rem;
+}
+
+.features-indicators button {
+    width: 10px;
+    height: 10px;
+    border: 1px solid var(--color-muted);
+    border-radius: var(--radius-full);
+    background: transparent;
+}
+
+.features-indicators button[aria-pressed="true"] {
+    border-color: var(--color-primary);
+    background: var(--color-primary);
 }
 
 .features-controls button {
@@ -785,6 +912,11 @@ h3 {
     font-size: var(--text-xs);
 }
 
+html:not(.js-enabled) .features-controls,
+html:not(.js-enabled) .features-indicators {
+    display: none;
+}
+
 /* RESPONSIVE LAYOUT */
 
 @media (min-width: 48rem) {
@@ -796,6 +928,7 @@ h3 {
         width: calc(100% - 2rem);
         max-width: var(--container-width);
         margin: 1.5rem auto;
+        top: 1.5rem;
         padding-inline: 1.5rem;
     }
 
@@ -813,10 +946,29 @@ h3 {
 
     .nav {
         display: block;
+        position: static;
+        inset: auto;
+        z-index: auto;
+        width: auto;
+        max-height: none;
+        overflow: visible;
+        padding: 0;
+        border: 0;
+        border-radius: 0;
+        background: transparent;
+        box-shadow: none;
+        transform: none;
+        visibility: visible;
+        transition: none;
+    }
+
+    .nav-close {
+        display: none;
     }
 
     .nav-links {
         display: flex;
+        flex-direction: row;
         align-items: center;
         gap: clamp(1.5rem, 4vw, 3rem);
     }
@@ -894,19 +1046,19 @@ h3 {
     }
 
     .features-grid {
-        display: flex;
-        gap: 1.5rem;
-        overflow-x: auto;
-        margin-inline: -1rem;
-        padding-inline: 1rem;
+        grid-template-columns: minmax(0, 1fr);
+        gap: 2rem;
+        overflow: visible;
     }
 
     .feature-slide,
     .feature-slide.active {
         position: relative;
         display: block;
-        flex: 0 0 min(78vw, 760px);
         min-width: 0;
+        width: 100%;
+        max-width: 760px;
+        margin-inline: auto;
     }
 
     .feature-slide img {
@@ -915,18 +1067,80 @@ h3 {
     }
 
     .feature-content {
+        position: static;
+        width: auto;
+        max-width: none;
+        padding: 1.5rem 0;
+        border-radius: 0;
+        background: transparent;
+    }
+
+    .features-controls,
+    .features-indicators {
+        display: none;
+    }
+
+    .features.is-mobile .features-controls {
+        display: flex;
+    }
+
+    .features.is-mobile .features-indicators {
+        display: flex;
+    }
+
+    .features.is-pinned {
+        position: relative;
+    }
+
+    .features.is-pinned .features-grid {
+        position: sticky;
+        top: 5rem;
+        display: flex;
+        gap: 0;
+        width: min(100%, 760px);
+        aspect-ratio: 4 / 3;
+        max-height: calc(100vh - 7rem);
+        overflow: hidden;
+        margin-inline: auto;
+    }
+
+    .features.is-pinned .feature-slide,
+    .features.is-pinned .feature-slide.active {
+        position: relative;
+        inset: auto;
+        display: block;
+        flex: 0 0 100%;
+        width: 100%;
+        max-width: none;
+        height: 100%;
+        margin: 0;
+    }
+
+    .features.is-pinned .feature-slide img {
+        width: 100%;
+        height: 100%;
+        max-width: none;
+    }
+
+    .features.is-pinned .feature-content {
         position: absolute;
         right: 1rem;
         bottom: 1rem;
-        left: 1rem;
+        left: auto;
         width: fit-content;
         max-width: min(30rem, calc(100% - 2rem));
         padding: 1.25rem;
         border-radius: var(--radius-lg);
         background: rgba(24, 26, 21, .9);
+        visibility: hidden;
     }
 
-    .features-controls {
+    .features.is-pinned .feature-content.is-visible {
+        visibility: visible;
+    }
+
+    .features.is-pinned .features-controls,
+    .features.is-pinned .features-indicators {
         display: none;
     }
 
@@ -1002,5 +1216,16 @@ h3 {
     .roadmap-cards,
     .resource-cards {
         grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    .header,
+    .nav {
+        transition: none;
     }
 }
